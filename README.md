@@ -22,12 +22,12 @@ cache.fetch "abc", expensive_function, (err, data) ->
 superfetch.create_cache({namespace: 'twitter'})
 ```
 
-### Default cache expiry:
+### Default cache expiry (ms):
 ```
-superfetch.create_cache({expires_in: 'twitter'})
+superfetch.create_cache({expires_in: 3600 })
 ```
 
-### Set key with expiry:
+### Set key with expiry (ms):
 ```
 cache.set(key, data, expiry, callback)
 ```
