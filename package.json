@@ -1,6 +1,6 @@
 {
   "name": "super-fetch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/super-fetch.js",
   "description": "Easily retrieve or cache the results of a function call. Storage in redis.",
   "homepage": "https://github.com/jonog/super-fetch",
