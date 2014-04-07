@@ -17,11 +17,13 @@
   'use strict';
 
   SuperFetch = (function() {
-    var _expires_in, _namespace;
+    var _expires_in, _namespace, _storage;
 
     _namespace = null;
 
     _expires_in = null;
+
+    _storage = null;
 
     function SuperFetch(options) {
       var _ref, _ref1;
@@ -29,6 +31,7 @@
       this.fetch = __bind(this.fetch, this);
       _namespace = ((_ref = this.options) != null ? _ref.namespace : void 0) || 'sf';
       _expires_in = ((_ref1 = this.options) != null ? _ref1.expires_in : void 0) || null;
+      _storage = redis.createClient();
     }
 
     SuperFetch.prototype.set_namespace = function(ns) {
@@ -37,7 +40,7 @@
 
     SuperFetch.prototype._get = function(key, cb) {
       key = "" + _namespace + ":" + key;
-      return redis.createClient().get(key, function(err, data) {
+      return _storage.get(key, function(err, data) {
         if (err != null) {
           return cb(err);
         }
@@ -51,11 +54,11 @@
     SuperFetch.prototype._set = function(key, data, ttl, cb) {
       key = "" + _namespace + ":" + key;
       if (ttl != null) {
-        return redis.createClient().set(key, JSON.stringify(data), "EX", ttl, function() {
+        return _storage.set(key, JSON.stringify(data), "EX", ttl, function() {
           return cb(null, data);
         });
       } else {
-        return redis.createClient().set(key, JSON.stringify(data), function() {
+        return _storage.set(key, JSON.stringify(data), function() {
           return cb(null, data);
         });
       }
@@ -84,7 +87,7 @@
     };
 
     SuperFetch.prototype.flush = function(cb) {
-      return redis.createClient().flushdb(function() {
+      return _storage.flushdb(function() {
         return cb();
       });
     };
