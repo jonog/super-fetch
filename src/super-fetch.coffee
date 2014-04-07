@@ -50,7 +50,7 @@ class SuperFetch
         return cb(err) if err?
         @_set key, data, ttl, cb
 
-  # TODO - only flush keys
+  # TODO - only flush namespace keys
   flush: (cb) ->
     _storage.flushdb ->
       cb()

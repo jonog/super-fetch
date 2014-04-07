@@ -1,4 +1,4 @@
-superfetch = require '../src/super-fetch'
+superfetch = require 'super-fetch'
 
 cache = superfetch.create_cache(namespace: "random")
 
